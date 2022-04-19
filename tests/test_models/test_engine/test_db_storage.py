@@ -86,3 +86,14 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that checks output of get method"""
+        try:
+            first_state_id = list(models.storage.all(State).values())[0].id
+            res = models.storage.get(State, first_state_id)
+        except Exception:
+            self.assertRaises(Exception)
+        self.assertEqual(res.id, first_state_id,
+                         "output ID is not as expected")
